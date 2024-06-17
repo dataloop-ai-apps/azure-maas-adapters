@@ -10,7 +10,11 @@
     "Gen AI": "LLM",
     "NLP": "Conversational"
   },
-
+  "codebase": {
+    "type": "git",
+    "gitUrl": "https://github.com/dataloop-ai-apps/azure-maas-adapters.git",
+    "gitTag": "0.0.1"
+  },
   "components": {
     "computeConfigs": [
       {
