@@ -5,7 +5,7 @@
   "scope": "public",
   "description": "Mistral-Small from Azure API - Requires API Key and Endpoint URL",
   "attributes": {
-    "Provider": "Microsoft",
+    "Provider": "MistralAI",
     "Category": "Model",
     "Gen AI": "LLM",
     "NLP": "Conversational"

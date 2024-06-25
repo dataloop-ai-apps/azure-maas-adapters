@@ -5,7 +5,7 @@
   "scope": "public",
   "description": "Jais-30b-chat from Azure API",
   "attributes": {
-    "Provider": "Jais",
+    "Provider": "Core42",
     "Category": "Model",
     "Gen AI": "LLM",
     "NLP": "Conversational"

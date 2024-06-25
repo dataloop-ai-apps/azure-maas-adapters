@@ -1,11 +1,12 @@
 {
-  "name": "azure-api-phi-3-medium-128k-instruct",
-  "displayName": "Phi-3-medium-128k-instruct Azure API",
+  "name": "azure-api-ai21-jamba-instruct",
+  "displayName": "AI21-Jamba-Instruct Azure API",
   "version": "0.0.2",
   "scope": "public",
-  "description": "Phi-3-medium-128k-instruct from Azure API",
+  "description": "AI21-Jamba-Instruct from Azure API",
   "attributes": {
-    "Provider": "Microsoft",
+    "Provider": "AI21",
+    "Deployer": "Microsoft",
     "Category": "Model",
     "Gen AI": "LLM",
     "NLP": "Conversational"
@@ -18,7 +19,7 @@
   "components": {
     "computeConfigs": [
       {
-        "name": "phi-3-medium-128k-instruct-azure-deploy",
+        "name": "ai21-jamba-instruct-azure-deploy",
         "runtime": {
           "podType": "regular-xs",
           "concurrency": 10,
@@ -33,11 +34,11 @@
     ],
     "modules": [
       {
-        "name": "phi-3-medium-128k-instruct-azure-module",
+        "name": "ai21-jamba-instruct-azure-module",
         "entryPoint": "modules/base_model_adapter.py",
         "className": "ModelAdapter",
-        "computeConfig": "phi-3-medium-128k-instruct-azure-deploy",
-        "description": "Phi-3-medium-128k-instruct Azure API Adapter",
+        "computeConfig": "ai21-jamba-instruct-azure-deploy",
+        "description": "AI21-Jamba-Instruct Azure API Adapter",
         "initInputs": [
           {
             "type": "Model",
@@ -72,7 +73,7 @@
             ],
             "displayName": "Predict Items",
             "displayIcon": "",
-            "description": "Azure API Phi-3-medium-128k-instruct predict items"
+            "description": "Azure API AI21-Jamba-Instruct predict items"
           },
           {
             "name": "predict_dataset",
@@ -92,7 +93,7 @@
             ],
             "displayName": "Predict Dataset",
             "displayIcon": "",
-            "description": "Function to run Azure API Phi-3-medium-128k-instruct inference on a dataset"
+            "description": "Function to run Azure API AI21-Jamba-Instruct inference on a dataset"
           },
           {
             "name": "evaluate_model",
@@ -128,15 +129,15 @@
             ],
             "displayName": "Evaluate a Model",
             "displayIcon": "",
-            "description": "Function to evaluate Azure API Phi-3-medium-128k-instruct model performance"
+            "description": "Function to evaluate Azure API AI21-Jamba-Instruct model performance"
           }
         ]
       }
     ],
     "models": [
       {
-        "name": "phi-3-medium-128k-instruct-azure",
-        "moduleName": "phi-3-medium-128k-instruct-azure-module",
+        "name": "ai21-jamba-instruct-azure",
+        "moduleName": "ai21-jamba-instruct-azure-module",
         "scope": "project",
         "status": "pre-trained",
         "configuration": {
@@ -147,7 +148,7 @@
           "seed": 0,
           "endpoint-url": ""
         },
-        "description": "The Phi-3-medium-128k-instruct model on Azure API provides robust and versatile natural language processing for various text-based tasks, designed for medium-scale applications."
+        "description": "The AI21-Jamba-Instruct model on Azure API provides robust and versatile natural language processing for various text-based tasks, designed for medium-scale applications."
       }
     ]
   }
