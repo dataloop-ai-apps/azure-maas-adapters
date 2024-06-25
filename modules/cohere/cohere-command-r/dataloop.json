@@ -5,7 +5,7 @@
   "scope": "public",
   "description": "Cohere-command-r from Azure API",
   "attributes": {
-    "Provider": "Cohere",
+    "Provider": "Microsoft",
     "Category": "Model",
     "Gen AI": "LLM",
     "NLP": "Conversational"
