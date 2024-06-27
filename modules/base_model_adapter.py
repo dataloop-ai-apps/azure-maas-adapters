@@ -10,6 +10,7 @@ logger = logging.getLogger("AzureAI Adapter")
 class ModelAdapter(dl.BaseModelAdapter):
     def __init__(self, model_entity: dl.Model, azure_api_key_name):
         self.api_key = os.environ.get(azure_api_key_name, None)
+        self.client = None
         if self.api_key is None:
             raise ValueError(f"Missing API key: {azure_api_key_name}")
         super().__init__(model_entity)
