@@ -1,7 +1,7 @@
 {
   "name": "azure-api-jais-30b-chat",
   "displayName": "Jais-30b-chat Azure API",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "scope": "public",
   "description": "Jais-30b-chat from Azure API",
   "attributes": {
@@ -14,7 +14,7 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/azure-maas-adapters.git",
-    "gitTag": "0.0.3"
+    "gitTag": "0.0.4"
   },
   "components": {
     "computeConfigs": [
