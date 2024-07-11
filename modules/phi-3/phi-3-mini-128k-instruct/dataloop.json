@@ -6,6 +6,7 @@
   "description": "Phi-3-mini-128k-instruct from Azure API",
   "attributes": {
     "Provider": "Microsoft",
+    "Deployed By": "Microsoft",
     "Category": "Model",
     "Gen AI": "LLM",
     "NLP": "Conversational"

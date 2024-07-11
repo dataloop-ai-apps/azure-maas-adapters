@@ -5,8 +5,8 @@
   "scope": "public",
   "description": "AI21-Jamba-Instruct from Azure API",
   "attributes": {
-    "Provider": "Microsoft",
-    "Deployer": "Microsoft",
+    "Provider": "AI21",
+    "Deployed By": "Microsoft",
     "Category": "Model",
     "Gen AI": "LLM",
     "NLP": "Conversational"

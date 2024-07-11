@@ -6,6 +6,7 @@
   "description": "Mistral-Small from Azure API - Requires API Key and Endpoint URL",
   "attributes": {
     "Provider": "MistralAI",
+    "Deployed By": "Microsoft",
     "Category": "Model",
     "Gen AI": "LLM",
     "NLP": "Conversational"

@@ -5,7 +5,8 @@
   "scope": "public",
   "description": "Cohere-embed-v3-multilingual from Azure API",
   "attributes": {
-    "Provider": "Microsoft",
+    "Provider": "Cohere",
+    "Deployed By": "Microsoft",
     "Category": "Model",
     "Gen AI": "LLM",
     "NLP": "Conversational"
