@@ -1,4 +1,4 @@
-from openai import OpenAI
+import requests
 import dtlpy as dl
 import logging
 import json
@@ -15,12 +15,10 @@ class ModelAdapter(dl.BaseModelAdapter):
         super().__init__(model_entity)
 
     def load(self, local_path, **kwargs):
-        url = self.configuration.get("endpoint-url", None)
-        if url is None:
+        self.url = self.configuration.get("endpoint-url", None)
+        if self.url is None:
             raise ValueError("You must provide the endpoint URL for the deployed model. "
                              "Add the URL to the model's configuration under 'endpoint-url'.")
-
-        self.client = OpenAI(base_url=url, api_key=self.api_key)
 
     def prepare_item_func(self, item: dl.Item):
         if ('json' not in item.mimetype or
@@ -28,6 +26,34 @@ class ModelAdapter(dl.BaseModelAdapter):
             raise ValueError('Only prompt items are supported')
         buffer = json.load(item.download(save_locally=False))
         return buffer
+
+    def call_model_requests(self, messages):
+        # Configure payload data sending to API endpoint
+        data = {
+            "messages": messages,
+            "max_tokens": self.configuration.get('max_tokens', 1024),
+            "temperature": self.configuration.get('temperature', 0.5),
+            "top_p": self.model_entity.configuration.get('top_p', 0.7),
+            "stream": False,
+        }
+
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.api_key}"
+        }
+
+        response = requests.post(self.url, json=data, headers=headers)
+
+        if not response.ok:
+            raise ValueError(f'error:{response.status_code}, message: {response.text}')
+
+        chunks = []
+        for chunk in response.json().get('choices'):
+            chunks.append(chunk.get('message').get('content'))
+
+        full_answer = ''.join(chunks)
+
+        return full_answer
 
     def predict(self, batch, **kwargs):
         system_prompt = self.model_entity.configuration.get('system_prompt', "")
@@ -55,18 +81,7 @@ class ModelAdapter(dl.BaseModelAdapter):
                         context += f"\n{text}"
                     messages.append({"role": "assistant", "content": context})
 
-                response = self.client.chat.completions.create(
-                    model="azureai",
-                    messages=messages,
-                    temperature=self.configuration.get('temperature', 0.5),
-                    top_p=self.configuration.get('top_p', 1),
-                    max_tokens=self.configuration.get('max_tokens', 1024),
-                    stream=True
-                )
-                full_answer = ""
-                for chunk in response:
-                    if chunk.choices[0].delta.content is not None:
-                        full_answer += chunk.choices[0].delta.content
+                full_answer = self.call_model_requests(messages=messages)
                 collection.add(
                     annotation_definition=dl.FreeText(text=full_answer),
                     prompt_id=prompt_name,
