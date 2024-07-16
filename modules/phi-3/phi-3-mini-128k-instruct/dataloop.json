@@ -1,7 +1,7 @@
 {
   "name": "azure-api-phi-3-mini-128k-instruct",
   "displayName": "Phi-3-mini-128k-instruct Azure API",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "scope": "public",
   "description": "Phi-3-mini-128k-instruct from Azure API",
   "attributes": {
@@ -14,7 +14,7 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/azure-maas-adapters.git",
-    "gitTag": "0.0.4"
+    "gitTag": "0.0.5"
   },
   "components": {
     "computeConfigs": [
