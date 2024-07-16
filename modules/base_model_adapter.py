@@ -10,7 +10,6 @@ logger = logging.getLogger("AzureAI Adapter")
 class ModelAdapter(dl.BaseModelAdapter):
     def __init__(self, model_entity: dl.Model, azure_api_key_name):
         self.api_key = os.environ.get(azure_api_key_name, None)
-        self.client = None
         if self.api_key is None:
             raise ValueError(f"Missing API key: {azure_api_key_name}")
         super().__init__(model_entity)
@@ -37,21 +36,18 @@ class ModelAdapter(dl.BaseModelAdapter):
             "top_p": self.model_entity.configuration.get('top_p', 0.7),
             "stream": False,
         }
-
         headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.api_key}"
         }
 
         response = requests.post(self.url, json=data, headers=headers)
-
         if not response.ok:
             raise ValueError(f'error:{response.status_code}, message: {response.text}')
 
         chunks = []
         for chunk in response.json().get('choices'):
             chunks.append(chunk.get('message').get('content'))
-
         full_answer = ''.join(chunks)
 
         return full_answer
