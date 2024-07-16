@@ -145,7 +145,6 @@
           "max_tokens": 1024,
           "temperature": 0.5,
           "top_p": 1,
-          "seed": 0,
           "endpoint-url": ""
         },
         "description": "The Mistral Small model on Azure API offers efficient natural language processing capabilities for tasks like text generation and summarization."

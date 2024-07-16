@@ -48,7 +48,7 @@ class ModelAdapter(dl.BaseModelAdapter):
         chunks = []
         for chunk in response.json().get('choices'):
             chunks.append(chunk.get('message').get('content'))
-        full_answer = ''.join(chunks)
+        full_answer = ' '.join(chunks)
 
         return full_answer
 

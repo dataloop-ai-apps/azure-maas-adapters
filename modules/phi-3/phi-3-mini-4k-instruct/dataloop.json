@@ -145,7 +145,6 @@
           "max_tokens": 1024,
           "temperature": 0.5,
           "top_p": 1,
-          "seed": 0,
           "endpoint-url": ""
         },
         "description": "The Phi-3-mini-4k-instruct model on Azure API delivers compact yet effective natural language processing capabilities, ideal for lightweight and efficient text-based tasks"

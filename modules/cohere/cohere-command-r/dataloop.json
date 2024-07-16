@@ -145,7 +145,6 @@
           "max_tokens": 1024,
           "temperature": 0.5,
           "top_p": 1,
-          "seed": 0,
           "endpoint-url": ""
         },
         "description": "The Cohere-command-r model on Azure API provides robust and versatile natural language processing for various text-based tasks, designed for medium-scale applications."
