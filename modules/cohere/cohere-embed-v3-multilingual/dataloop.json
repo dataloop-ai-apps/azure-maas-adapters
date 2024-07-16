@@ -1,11 +1,11 @@
 {
-  "name": "azure-api-phi-3-medium-128k-instruct",
-  "displayName": "Phi-3-medium-128k-instruct Azure API",
-  "version": "0.0.4",
+  "name": "azure-api-cohere-embed-v3-multilingual",
+  "displayName": "Cohere-embed-v3-multilingual Azure API",
+  "version": "0.0.2",
   "scope": "public",
-  "description": "Phi-3-medium-128k-instruct from Azure API",
+  "description": "Cohere-embed-v3-multilingual from Azure API",
   "attributes": {
-    "Provider": "Microsoft",
+    "Provider": "Cohere",
     "Deployed By": "Microsoft",
     "Category": "Model",
     "Gen AI": "LLM",
@@ -14,12 +14,12 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/azure-maas-adapters.git",
-    "gitTag": "0.0.4"
+    "gitTag": "0.0.2"
   },
   "components": {
     "computeConfigs": [
       {
-        "name": "phi-3-medium-128k-instruct-azure-deploy",
+        "name": "cohere-embed-v3-multilingual-azure-deploy",
         "runtime": {
           "podType": "regular-xs",
           "concurrency": 10,
@@ -34,11 +34,11 @@
     ],
     "modules": [
       {
-        "name": "phi-3-medium-128k-instruct-azure-module",
+        "name": "cohere-embed-v3-multilingual-azure-module",
         "entryPoint": "modules/base_model_adapter.py",
         "className": "ModelAdapter",
-        "computeConfig": "phi-3-medium-128k-instruct-azure-deploy",
-        "description": "Phi-3-medium-128k-instruct Azure API Adapter",
+        "computeConfig": "cohere-embed-v3-multilingual-azure-deploy",
+        "description": "Cohere-embed-v3-multilingual Azure API Adapter",
         "initInputs": [
           {
             "type": "Model",
@@ -73,7 +73,7 @@
             ],
             "displayName": "Predict Items",
             "displayIcon": "",
-            "description": "Azure API Phi-3-medium-128k-instruct predict items"
+            "description": "Azure API Cohere-embed-v3-multilingual predict items"
           },
           {
             "name": "predict_dataset",
@@ -93,7 +93,7 @@
             ],
             "displayName": "Predict Dataset",
             "displayIcon": "",
-            "description": "Function to run Azure API Phi-3-medium-128k-instruct inference on a dataset"
+            "description": "Function to run Azure API Cohere-embed-v3-multilingual inference on a dataset"
           },
           {
             "name": "evaluate_model",
@@ -129,15 +129,15 @@
             ],
             "displayName": "Evaluate a Model",
             "displayIcon": "",
-            "description": "Function to evaluate Azure API Phi-3-medium-128k-instruct model performance"
+            "description": "Function to evaluate Azure API Cohere-embed-v3-multilingual model performance"
           }
         ]
       }
     ],
     "models": [
       {
-        "name": "phi-3-medium-128k-instruct-azure",
-        "moduleName": "phi-3-medium-128k-instruct-azure-module",
+        "name": "cohere-embed-v3-multilingual-azure",
+        "moduleName": "cohere-embed-v3-multilingual-azure-module",
         "scope": "project",
         "status": "pre-trained",
         "configuration": {
@@ -148,7 +148,7 @@
           "seed": 0,
           "endpoint-url": ""
         },
-        "description": "The Phi-3-medium-128k-instruct model on Azure API provides robust and versatile natural language processing for various text-based tasks, designed for medium-scale applications."
+        "description": "The Cohere-embed-v3-multilingual model on Azure API provides robust and versatile natural language processing for various text-based tasks, designed for medium-scale applications."
       }
     ]
   }

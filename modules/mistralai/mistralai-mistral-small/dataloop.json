@@ -1,11 +1,12 @@
 {
   "name": "azure-api-mistralai-mistral-small",
   "displayName": "Mistral-Small Azure API",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "scope": "public",
   "description": "Mistral-Small from Azure API - Requires API Key and Endpoint URL",
   "attributes": {
-    "Provider": "Microsoft",
+    "Provider": "MistralAI",
+    "Deployed By": "Microsoft",
     "Category": "Model",
     "Gen AI": "LLM",
     "NLP": "Conversational"
@@ -13,7 +14,7 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/azure-maas-adapters.git",
-    "gitTag": "0.0.1"
+    "gitTag": "0.0.4"
   },
   "components": {
     "computeConfigs": [
