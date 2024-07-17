@@ -1,6 +1,6 @@
 {
   "name": "azure-api-phi-3-mini-4k-instruct",
-  "displayName": "Phi-3-mini-4k-instruct Azure API",
+  "displayName": "Phi-3-mini-4k-instruct",
   "version": "0.0.4",
   "scope": "public",
   "description": "Phi-3-mini-4k-instruct from Azure API",

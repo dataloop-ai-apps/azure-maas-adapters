@@ -1,6 +1,6 @@
 {
   "name": "azure-api-jais-30b-chat",
-  "displayName": "Jais-30b-chat Azure API",
+  "displayName": "Jais-30b-chat",
   "version": "0.0.4",
   "scope": "public",
   "description": "Jais-30b-chat from Azure API",

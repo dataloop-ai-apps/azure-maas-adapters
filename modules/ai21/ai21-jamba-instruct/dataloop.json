@@ -1,6 +1,6 @@
 {
   "name": "azure-api-ai21-jamba-instruct",
-  "displayName": "AI21-Jamba-Instruct Azure API",
+  "displayName": "AI21-Jamba-Instruct",
   "version": "0.0.4",
   "scope": "public",
   "description": "AI21-Jamba-Instruct from Azure API",

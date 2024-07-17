@@ -1,6 +1,6 @@
 {
   "name": "azure-api-mistralai-mistral-small",
-  "displayName": "Mistral-Small Azure API",
+  "displayName": "Mistral-Small",
   "version": "0.0.4",
   "scope": "public",
   "description": "Mistral-Small from Azure API - Requires API Key and Endpoint URL",

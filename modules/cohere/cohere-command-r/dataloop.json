@@ -1,6 +1,6 @@
 {
   "name": "azure-api-cohere-command-r",
-  "displayName": "Cohere-command-r Azure API",
+  "displayName": "Cohere-command-r",
   "version": "0.0.4",
   "scope": "public",
   "description": "Cohere-command-r from Azure API",
