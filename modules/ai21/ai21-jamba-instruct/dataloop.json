@@ -1,12 +1,7 @@
 {
   "name": "azure-api-ai21-jamba-instruct",
-<<<<<<< HEAD
   "displayName": "AI21-Jamba-Instruct",
-  "version": "0.0.4",
-=======
-  "displayName": "AI21-Jamba-Instruct Azure API",
   "version": "0.0.5",
->>>>>>> 8d328344a5d22fdc588abef3ab945170bcb1e525
   "scope": "public",
   "description": "AI21-Jamba-Instruct from Azure API",
   "attributes": {
