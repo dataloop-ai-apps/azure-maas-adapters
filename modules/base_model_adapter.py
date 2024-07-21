@@ -122,7 +122,7 @@ class ModelAdapter(dl.BaseModelAdapter):
 if __name__ == '__main__':
     dl.setenv('rc')
     azure_api_key_name = ''
-    model = dl.models.get(model_id='669635470ee7722b9d400834')
-    item = dl.items.get(item_id='66966668d2028fd28fdb88e9')
+    model = dl.models.get(model_id='')
+    item = dl.items.get(item_id='')
     adapter = ModelAdapter(model, '')
     adapter.predict_items(items=[item])
