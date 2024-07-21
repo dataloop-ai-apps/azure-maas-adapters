@@ -36,7 +36,7 @@
     "modules": [
       {
         "name": "ai21-jamba-instruct-azure-module",
-        "entryPoint": "modules/base_model_adapter.py",
+        "entryPoint": "models/base_model_adapter.py",
         "className": "ModelAdapter",
         "computeConfig": "ai21-jamba-instruct-azure-deploy",
         "description": "AI21-Jamba-Instruct Azure API Adapter",

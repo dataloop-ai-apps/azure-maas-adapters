@@ -36,7 +36,7 @@
     "modules": [
       {
         "name": "phi-3-medium-128k-instruct-azure-module",
-        "entryPoint": "modules/base_model_adapter.py",
+        "entryPoint": "models/base_model_adapter.py",
         "className": "ModelAdapter",
         "computeConfig": "phi-3-medium-128k-instruct-azure-deploy",
         "description": "Phi-3-medium-128k-instruct Azure API Adapter",

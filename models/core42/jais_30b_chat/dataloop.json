@@ -36,7 +36,7 @@
     "modules": [
       {
         "name": "jais-30b-chat-azure-module",
-        "entryPoint": "modules/base_model_adapter.py",
+        "entryPoint": "models/base_model_adapter.py",
         "className": "ModelAdapter",
         "computeConfig": "jais-30b-chat-azure-deploy",
         "description": "Jais-30b-chat Azure API Adapter",
