@@ -1,0 +1,150 @@
+{
+  "name": "azure-api-time-gen-1",
+  "displayName": "TimeGEN-1 Azure API",
+  "version": "0.0.1",
+  "scope": "public",
+  "description": "TimeGEN-1 from Azure API - Requires API Key and Endpoint URL",
+  "attributes": {
+    "Provider": "Microsoft",
+    "Category": "Model",
+    "Gen AI": "LLM",
+    "NLP": "Conversational"
+  },
+
+  "components": {
+    "computeConfigs": [
+      {
+        "name": "time-gen-1-azure-deploy",
+        "runtime": {
+          "podType": "regular-xs",
+          "concurrency": 10,
+          "runnerImage": "gcr.io/viewo-g/piper/agent/gpu/azure-maas-adapters:0.0.1",
+          "autoscaler": {
+            "type": "rabbitmq",
+            "minReplicas": 0,
+            "maxReplicas": 2
+          }
+        }
+      }
+    ],
+    "modules": [
+      {
+        "name": "time-gen-1-azure-module",
+        "entryPoint": "modules/time-gen/time_gen_adapter.py",
+        "className": "ModelAdapter",
+        "computeConfig": "time-gen-1-azure-deploy",
+        "description": "TimeGEN-1 Azure API Adapter",
+        "initInputs": [
+          {
+            "type": "Model",
+            "name": "model_entity"
+          },
+          {
+            "type": "String",
+            "name": "azure_api_key_name"
+          }
+        ],
+        "functions": [
+          {
+            "name": "predict_items",
+            "input": [
+              {
+                "type": "Item[]",
+                "name": "items",
+                "description": "List of items to run inference on"
+              }
+            ],
+            "output": [
+              {
+                "type": "Item[]",
+                "name": "items",
+                "description": "The same input images for prediction."
+              },
+              {
+                "type": "Annotation[]",
+                "name": "annotations",
+                "description": "The predicted annotations."
+              }
+            ],
+            "displayName": "Predict Items",
+            "displayIcon": "",
+            "description": "Azure API TimeGEN-1 predict items"
+          },
+          {
+            "name": "predict_dataset",
+            "input": [
+              {
+                "type": "Dataset",
+                "name": "dataset",
+                "description": ""
+              },
+              {
+                "type": "Json",
+                "name": "filters",
+                "description": "Dataloop Filter DQL"
+              }
+            ],
+            "output": [
+            ],
+            "displayName": "Predict Dataset",
+            "displayIcon": "",
+            "description": "Function to run Azure API TimeGEN-1 inference on a dataset"
+          },
+          {
+            "name": "evaluate_model",
+            "computeConfig": "deeplab-train-evaluate",
+            "input": [
+              {
+                "type": "Model",
+                "name": "model",
+                "description": "Dataloop Model Entity"
+              },
+              {
+                "type": "Dataset",
+                "name": "dataset",
+                "description": "Dataloop Dataset Entity"
+              },
+              {
+                "type": "Json",
+                "name": "filters",
+                "description": "Dataloop Filter DQL"
+              }
+            ],
+            "output": [
+              {
+                "type": "Model",
+                "name": "model",
+                "description": "Dataloop Model Entity"
+              },
+              {
+                "type": "Dataset",
+                "name": "dataset",
+                "description": "Dataloop Dataset Entity"
+              }
+            ],
+            "displayName": "Evaluate a Model",
+            "displayIcon": "",
+            "description": "Function to evaluate Azure API TimeGEN-1 model performance"
+          }
+        ]
+      }
+    ],
+    "models": [
+      {
+        "name": "time-gen-1-azure",
+        "moduleName": "time-gen-1-azure-module",
+        "scope": "project",
+        "status": "pre-trained",
+        "configuration": {
+          "system_prompt": "You are a helpful and a bit cynical assistant. Give relevant and short answers, if you dont know the answer just say it, dont make up an answer",
+          "max_tokens": 1024,
+          "temperature": 0.5,
+          "top_p": 1,
+          "seed": 0,
+          "endpoint-url": ""
+        },
+        "description": "The Mistral Small model on Azure API offers efficient natural language processing capabilities for tasks like text generation and summarization."
+      }
+    ]
+  }
+}
