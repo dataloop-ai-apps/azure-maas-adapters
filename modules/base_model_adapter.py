@@ -15,8 +15,8 @@ class ModelAdapter(dl.BaseModelAdapter):
         super().__init__(model_entity)
 
     def load(self, local_path, **kwargs):
-        self.url = self.configuration.get("endpoint-url", None)
-        if self.url is None:
+        self.url = self.configuration.get("endpoint-url", "")
+        if not self.url:
             raise ValueError("You must provide the endpoint URL for the deployed model. "
                              "Add the URL to the model's configuration under 'endpoint-url'.")
 
@@ -27,28 +27,54 @@ class ModelAdapter(dl.BaseModelAdapter):
         buffer = json.load(item.download(save_locally=False))
         return buffer
 
+    @staticmethod
+    def extract_content(line):
+        try:
+            if line.startswith("data: "):
+                line = line[len("data: "):]
+            json_data = json.loads(line)
+            if "choices" in json_data and json_data["choices"]:
+                choice = json_data["choices"][0]
+                if "delta" in choice and "content" in choice["delta"]:
+                    return choice["delta"]["content"]
+        except json.JSONDecodeError:
+            pass
+        return ""
+
+    @staticmethod
+    def post_stream(url, data, headers, stream):
+        s = requests.Session()
+        ans = ""
+        response = s.post(url, data=json.dumps(data), headers=headers, stream=stream)
+        if stream:
+            with response:  # To properly closed The response object after the block of code is executed
+                if not response.ok:
+                    raise ValueError(f'error:{response.status_code}, message: {response.text}')
+                logger.info("Streaming the response")
+                for line in response.iter_lines():
+                    if line:
+                        print(line)
+                        line = line.decode('utf-8')
+                        ans += ModelAdapter.extract_content(line)
+        else:
+            ans = response.json().get('choices')[0].get('message').get('content')
+        return ans
+
     def call_model_requests(self, messages):
         # Configure payload data sending to API endpoint
+        stream = self.model_entity.configuration.get('stream', True)
         data = {
             "messages": messages,
             "max_tokens": self.configuration.get('max_tokens', 1024),
             "temperature": self.configuration.get('temperature', 0.5),
             "top_p": self.model_entity.configuration.get('top_p', 0.7),
-            "stream": False,
+            "stream": stream
         }
         headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.api_key}"
         }
-
-        response = requests.post(self.url, json=data, headers=headers)
-        if not response.ok:
-            raise ValueError(f'error:{response.status_code}, message: {response.text}')
-
-        chunks = []
-        for chunk in response.json().get('choices'):
-            chunks.append(chunk.get('message').get('content'))
-        full_answer = ' '.join(chunks)
+        full_answer = self.post_stream(url=self.url, data=data, headers=headers, stream=stream)
 
         return full_answer
 
@@ -79,6 +105,7 @@ class ModelAdapter(dl.BaseModelAdapter):
                     messages.append({"role": "assistant", "content": context})
 
                 full_answer = self.call_model_requests(messages=messages)
+
                 collection.add(
                     annotation_definition=dl.FreeText(text=full_answer),
                     prompt_id=prompt_name,
@@ -93,8 +120,9 @@ class ModelAdapter(dl.BaseModelAdapter):
 
 
 if __name__ == '__main__':
+    dl.setenv('rc')
     azure_api_key_name = ''
-    model = dl.models.get(model_id='')
-    item = dl.items.get(item_id='')
+    model = dl.models.get(model_id='669635470ee7722b9d400834')
+    item = dl.items.get(item_id='66966668d2028fd28fdb88e9')
     adapter = ModelAdapter(model, '')
     adapter.predict_items(items=[item])

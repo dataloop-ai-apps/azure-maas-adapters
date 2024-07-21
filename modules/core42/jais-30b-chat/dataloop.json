@@ -7,7 +7,7 @@
   "attributes": {
     "Provider": "Core42",
     "Deployed By": "Microsoft",
-    "Media Type": "Text",
+    "Media Type": ["Text"],
     "Category": "Model",
     "Gen AI": "LLM",
     "NLP": "Conversational"
@@ -24,7 +24,7 @@
         "runtime": {
           "podType": "regular-xs",
           "concurrency": 10,
-          "runnerImage": "gcr.io/viewo-g/piper/agent/runner/cpu/openai:1.0.0",
+          "runnerImage": "dataloopai/dtlpy-agent:cpu.py3.10.opencv",
           "autoscaler": {
             "type": "rabbitmq",
             "minReplicas": 0,
@@ -95,42 +95,6 @@
             "displayName": "Predict Dataset",
             "displayIcon": "",
             "description": "Function to run Azure API Jais-30b-chat inference on a dataset"
-          },
-          {
-            "name": "evaluate_model",
-            "computeConfig": "deeplab-train-evaluate",
-            "input": [
-              {
-                "type": "Model",
-                "name": "model",
-                "description": "Dataloop Model Entity"
-              },
-              {
-                "type": "Dataset",
-                "name": "dataset",
-                "description": "Dataloop Dataset Entity"
-              },
-              {
-                "type": "Json",
-                "name": "filters",
-                "description": "Dataloop Filter DQL"
-              }
-            ],
-            "output": [
-              {
-                "type": "Model",
-                "name": "model",
-                "description": "Dataloop Model Entity"
-              },
-              {
-                "type": "Dataset",
-                "name": "dataset",
-                "description": "Dataloop Dataset Entity"
-              }
-            ],
-            "displayName": "Evaluate a Model",
-            "displayIcon": "",
-            "description": "Function to evaluate Azure API Jais-30b-chat model performance"
           }
         ]
       }
@@ -146,6 +110,7 @@
           "max_tokens": 1024,
           "temperature": 0.5,
           "top_p": 1,
+          "stream": true,
           "endpoint-url": ""
         },
         "description": "The Jais-30b-chat model on Azure API provides robust and versatile natural language processing for various text-based tasks, designed for medium-scale applications."
