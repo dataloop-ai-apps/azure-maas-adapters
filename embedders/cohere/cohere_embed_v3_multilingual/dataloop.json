@@ -21,7 +21,7 @@
     "components": {
         "computeConfigs": [
             {
-                "name": "cohere-embed-v3-multilingual-azure-deploy",
+                "name": "multilingual-azure-deploy",
                 "runtime": {
                     "podType": "regular-xs",
                     "concurrency": 10,
@@ -36,19 +36,15 @@
         ],
         "modules": [
             {
-                "name": "cohere-embed-v3-multilingual-azure-module",
+                "name": "multilingual-azure-module",
                 "entryPoint": "embedders/base_embed_adapter.py",
                 "className": "ModelAdapter",
-                "computeConfig": "cohere-embed-v3-multilingual-azure-deploy",
+                "computeConfig": "multilingual-azure-deploy",
                 "description": "Cohere-embed-v3-multilingual Azure API Adapter",
                 "initInputs": [
                     {
                         "type": "Model",
                         "name": "model_entity"
-                    },
-                    {
-                        "type": "String",
-                        "name": "azure_api_key_name"
                     }
                 ],
                 "functions": [
@@ -142,7 +138,7 @@
         "models": [
             {
                 "name": "cohere-embed-v3-multilingual-azure",
-                "moduleName": "cohere-embed-v3-multilingual-azure-module",
+                "moduleName": "multilingual-azure-module",
                 "scope": "project",
                 "status": "pre-trained",
                 "configuration": {

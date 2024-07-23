@@ -16,6 +16,9 @@ class ModelAdapter(dl.BaseModelAdapter):
 
     def load(self, local_path, **kwargs):
         self.url = self.configuration.get("endpoint-url", "")
+        batch_size = self.configuration.get("batch_size", 10)
+        if batch_size > 2048:
+            raise ValueError(f'Model configuration `batch_size` cannot be larger that 2048. Value: {batch_size}')
         if not self.url:
             raise ValueError("You must provide the endpoint URL for the deployed model. "
                              "Add the URL to the model's configuration under 'endpoint-url'.")
@@ -35,6 +38,8 @@ class ModelAdapter(dl.BaseModelAdapter):
             "Authorization": f"Bearer {self.api_key}"
         }
         response = requests.post(self.url, data=json.dumps(data), headers=headers)
+        if not response.ok:
+            raise ValueError(f'Failed getting response. status code:{response.status_code}, error: {response.text}')
         vectors = response.json().get('data')
 
         return vectors
