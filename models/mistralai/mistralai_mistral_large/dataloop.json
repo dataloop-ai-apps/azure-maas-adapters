@@ -1,0 +1,122 @@
+{
+  "name": "azure-api-mistralai-mistral-large",
+  "displayName": "Mistral-Large",
+  "version": "0.0.10",
+  "scope": "public",
+  "description": "Mistral-Large from Azure API - Requires API Key and Endpoint URL",
+  "attributes": {
+    "Provider": "MistralAI",
+    "Deployed By": "Microsoft",
+    "Media Type": [
+      "Text"
+    ],
+    "Category": "Model",
+    "Gen AI": "LLM",
+    "NLP": "Conversational"
+  },
+  "codebase": {
+    "type": "git",
+    "gitUrl": "https://github.com/dataloop-ai-apps/azure-maas-adapters.git",
+    "gitTag": "0.0.10"
+  },
+  "components": {
+    "computeConfigs": [
+      {
+        "name": "mistral-large-azure-deploy",
+        "runtime": {
+          "podType": "regular-xs",
+          "concurrency": 10,
+          "runnerImage": "dataloopai/dtlpy-agent:cpu.py3.10.opencv",
+          "autoscaler": {
+            "type": "rabbitmq",
+            "minReplicas": 0,
+            "maxReplicas": 2
+          }
+        }
+      }
+    ],
+    "modules": [
+      {
+        "name": "mistral-large-azure-module",
+        "entryPoint": "models/base_model_adapter.py",
+        "className": "ModelAdapter",
+        "computeConfig": "mistral-large-azure-deploy",
+        "description": "Mistral-Large Azure API Adapter",
+        "initInputs": [
+          {
+            "type": "Model",
+            "name": "model_entity"
+          },
+          {
+            "type": "String",
+            "name": "azure_api_key_name"
+          }
+        ],
+        "functions": [
+          {
+            "name": "predict_items",
+            "input": [
+              {
+                "type": "Item[]",
+                "name": "items",
+                "description": "List of items to run inference on"
+              }
+            ],
+            "output": [
+              {
+                "type": "Item[]",
+                "name": "items",
+                "description": "The same input images for prediction."
+              },
+              {
+                "type": "Annotation[]",
+                "name": "annotations",
+                "description": "The predicted annotations."
+              }
+            ],
+            "displayName": "Predict Items",
+            "displayIcon": "",
+            "description": "Azure API Mistral-Large predict items"
+          },
+          {
+            "name": "predict_dataset",
+            "input": [
+              {
+                "type": "Dataset",
+                "name": "dataset",
+                "description": ""
+              },
+              {
+                "type": "Json",
+                "name": "filters",
+                "description": "Dataloop Filter DQL"
+              }
+            ],
+            "output": [
+            ],
+            "displayName": "Predict Dataset",
+            "displayIcon": "",
+            "description": "Function to run Azure API Mistral-Large inference on a dataset"
+          }
+        ]
+      }
+    ],
+    "models": [
+      {
+        "name": "mistral-large-azure",
+        "moduleName": "mistral-large-azure-module",
+        "scope": "project",
+        "status": "pre-trained",
+        "configuration": {
+          "system_prompt": "You are a helpful and a bit cynical assistant. Give relevant and short answers, if you dont know the answer just say it, dont make up an answer",
+          "max_tokens": 1024,
+          "temperature": 0.5,
+          "top_p": 1,
+          "stream": true,
+          "endpoint-url": ""
+        },
+        "description": "The Mistral Large model on Azure API provides powerful natural language processing capabilities, including text generation and summarization, with high efficiency."
+      }
+    ]
+  }
+}
