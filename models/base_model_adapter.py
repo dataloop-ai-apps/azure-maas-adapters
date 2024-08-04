@@ -99,9 +99,10 @@ class ModelAdapter(dl.BaseModelAdapter):
                     context = ""
                     for item_id in nearest_items:
                         context_item = dl.items.get(item_id=item_id)
+                        source = context_item.metadata['system'].get('document', dict()).get('source', "missing")
                         with open(context_item.download(), 'r', encoding='utf-8') as f:
                             text = f.read()
-                        context += f"\n{text}"
+                        context += f"\n<source>\n{source}\n</source>\n<text>\n{text}\n</text>"
                     messages.append({"role": "assistant", "content": context})
 
                 full_answer = self.call_model_requests(messages=messages)
