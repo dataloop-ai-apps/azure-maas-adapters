@@ -341,3 +341,4 @@ filters-apps.py
 *.csv
 .github/
 test_phi.py
+*.whl
