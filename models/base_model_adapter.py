@@ -11,9 +11,6 @@ class ModelAdapter(dl.BaseModelAdapter):
 
     def load(self, local_path, **kwargs):
         self.adapter_defaults.upload_annotations = False
-        self.adapter_defaults.clean_annotations = self.configuration.get("clean_annotations",
-                                                                         True)  # TODO: add it to configuration?
-
         self.api_key = os.environ.get("AZURE_MODEL_API_KEY")
         if self.api_key is None:
             raise ValueError(f"Missing API key")
@@ -22,6 +19,7 @@ class ModelAdapter(dl.BaseModelAdapter):
         if not self.url:
             raise ValueError("You must provide the endpoint URL for the deployed model. "
                              "Add the URL to the model's configuration under 'endpoint-url'.")
+        self.stream = self.configuration.get("stream", True)
 
     def prepare_item_func(self, item: dl.Item):
         prompt_item = dl.PromptItem.from_item(item)
@@ -43,14 +41,12 @@ class ModelAdapter(dl.BaseModelAdapter):
 
     def post_stream(self, messages):
 
-        stream = self.model_entity.configuration.get('stream', True)
-
         data = {
             "messages": messages,
             "max_tokens": self.configuration.get('max_tokens', 1024),
             "temperature": self.configuration.get('temperature', 0.5),
             "top_p": self.model_entity.configuration.get('top_p', 0.7),
-            "stream": stream
+            "stream": self.stream
         }
         headers = {
             "Content-Type": "application/json",
@@ -58,8 +54,8 @@ class ModelAdapter(dl.BaseModelAdapter):
         }
 
         s = requests.Session()
-        response = s.post(self.url, data=json.dumps(data), headers=headers, stream=stream)
-        if stream:
+        response = s.post(self.url, data=json.dumps(data), headers=headers, stream=self.stream)
+        if self.stream:
             try:
                 with response:  # To properly closed The response object after the block of code is executed
                     if not response.ok:
@@ -67,9 +63,8 @@ class ModelAdapter(dl.BaseModelAdapter):
                     logger.info("Streaming the response")
                     for line in response.iter_lines():
                         if line:
-                            print(line)
                             line = line.decode('utf-8')
-                            yield ModelAdapter.extract_content(line) or ""
+                            yield self.extract_content(line) or ""
             except requests.exceptions.RequestException as e:
                 logger.warning(f"Request failed: {e}")
         else:
@@ -81,47 +76,60 @@ class ModelAdapter(dl.BaseModelAdapter):
             _messages = prompt_item.to_messages(
                 model_name=self.model_entity.name)  # Get all messages including model annotations
 
-            # REFORMAT FOR REQUESTS
-            messages = list()
-            for _message in _messages:
-                content = _message["content"]
-                question = content[0][content[0].get("type")]
-                role = _message["role"]
-
-                message = {"role": role, "content": question}
-                messages.append(message)
-
+            messages = self.reformat_messages(_messages)
             messages.insert(0, {"role": "system",
                                 "content": system_prompt})
 
             nearest_items = prompt_item.prompts[-1].metadata.get('nearestItems', [])
             if len(nearest_items) > 0:
                 context = prompt_item.build_context(nearest_items=nearest_items,
-                                                    add_metadata=['system.document.source'])
+                                                    add_metadata=self.configuration.get("add_metadata"))
                 messages.append({"role": "assistant", "content": context})
 
-            stream = self.post_stream(messages=messages)
+            stream_response = self.post_stream(messages=messages)
             response = ""
-            for chunk in stream:
+            for chunk in stream_response:
                 #  Build text that includes previous stream
                 response += chunk
                 prompt_item.add(message={"role": "assistant",
                                          "content": [{"mimetype": dl.PromptType.TEXT,
                                                       "value": response}]},
-                                stream=True,
+                                stream=self.stream,
                                 model_info={'name': self.model_entity.name,
                                             'confidence': 1.0,
                                             'model_id': self.model_entity.id})
 
         return []
 
+    @staticmethod
+    def reformat_messages(messages):
+        """
+        Convert OpenAI message format to HTTP request format.
+        This function takes messages formatted for OpenAI's API and transforms them into a format suitable for HTTP
+        requests.
+
+        :param messages: A list of messages in the OpenAI format.
+        :return: A list of messages reformatted for HTTP requests.
+        """
+        reformat_messages = list()
+        for message in messages:
+            content = message["content"]
+            question = content[0][content[0].get("type")]
+            role = message["role"]
+
+            reformat_message = {"role": role, "content": question}
+            reformat_messages.append(reformat_message)
+
+        return reformat_messages
+
 
 if __name__ == '__main__':
     from dotenv import load_dotenv
+
     load_dotenv()
 
     dl.setenv('prod')
-    model = dl.models.get(model_id='66af7a003824c67e50b125f1')
-    item = dl.items.get(item_id='66b369a82e90de89dde976e0')
+    model = dl.models.get(model_id='')
+    item = dl.items.get(item_id='')
     adapter = ModelAdapter(model)
     adapter.predict_items(items=[item])

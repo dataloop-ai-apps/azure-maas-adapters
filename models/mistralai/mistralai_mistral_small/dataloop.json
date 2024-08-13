@@ -7,7 +7,9 @@
   "attributes": {
     "Provider": "MistralAI",
     "Deployed By": "Microsoft",
-    "Media Type": ["Text"],
+    "Media Type": [
+      "Text"
+    ],
     "Category": "Model",
     "Gen AI": "LLM",
     "NLP": "Conversational"
@@ -40,14 +42,13 @@
         "className": "ModelAdapter",
         "computeConfig": "mistral-small-azure-deploy",
         "description": "Mistral-Small Azure API Adapter",
+        "integrations": [
+          "AZURE_MODEL_API_KEY"
+        ],
         "initInputs": [
           {
             "type": "Model",
             "name": "model_entity"
-          },
-          {
-            "type": "String",
-            "name": "azure_api_key_name"
           }
         ],
         "functions": [
@@ -107,11 +108,14 @@
         "status": "pre-trained",
         "configuration": {
           "system_prompt": "You are a helpful and a bit cynical assistant. Give relevant and short answers, if you dont know the answer just say it, dont make up an answer",
+          "endpoint-url": "",
+          "add_metadata": [
+            "system.document.source"
+          ],
+          "stream": true,
           "max_tokens": 1024,
           "temperature": 0.5,
-          "top_p": 1,
-          "stream": true,
-          "endpoint-url": ""
+          "top_p": 1
         },
         "description": "The Mistral Small model on Azure API offers efficient natural language processing capabilities for tasks like text generation and summarization."
       }
