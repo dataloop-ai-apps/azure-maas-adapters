@@ -55,18 +55,16 @@ class ModelAdapter(dl.BaseModelAdapter):
 
         s = requests.Session()
         response = s.post(self.url, data=json.dumps(data), headers=headers, stream=self.stream)
+        if not response.ok:
+            raise ValueError(f'error:{response.status_code}, message: {response.text}')
+
         if self.stream:
-            try:
-                with response:  # To properly closed The response object after the block of code is executed
-                    if not response.ok:
-                        raise ValueError(f'error:{response.status_code}, message: {response.text}')
-                    logger.info("Streaming the response")
-                    for line in response.iter_lines():
-                        if line:
-                            line = line.decode('utf-8')
-                            yield self.extract_content(line) or ""
-            except requests.exceptions.RequestException as e:
-                logger.warning(f"Request failed: {e}")
+            with response:  # To properly closed The response object after the block of code is executed
+                logger.info("Streaming the response")
+                for line in response.iter_lines():
+                    if line:
+                        line = line.decode('utf-8')
+                        yield self.extract_content(line) or ""
         else:
             yield response.json().get('choices')[0].get('message').get('content')
 
