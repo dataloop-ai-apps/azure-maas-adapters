@@ -42,14 +42,13 @@
         "className": "ModelAdapter",
         "computeConfig": "mistral-large-azure-deploy",
         "description": "Mistral-Large Azure API Adapter",
+        "integrations": [
+          "AZURE_MODEL_API_KEY"
+        ],
         "initInputs": [
           {
             "type": "Model",
             "name": "model_entity"
-          },
-          {
-            "type": "String",
-            "name": "azure_api_key_name"
           }
         ],
         "functions": [
@@ -109,11 +108,14 @@
         "status": "pre-trained",
         "configuration": {
           "system_prompt": "You are a helpful and a bit cynical assistant. Give relevant and short answers, if you dont know the answer just say it, dont make up an answer",
+          "endpoint-url": "",
+          "add_metadata": [
+            "system.document.source"
+          ],
+          "stream": true,
           "max_tokens": 1024,
           "temperature": 0.5,
-          "top_p": 1,
-          "stream": true,
-          "endpoint-url": ""
+          "top_p": 1
         },
         "description": "The Mistral Large model on Azure API provides powerful natural language processing capabilities, including text generation and summarization, with high efficiency."
       }
