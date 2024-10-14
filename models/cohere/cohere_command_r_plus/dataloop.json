@@ -1,11 +1,11 @@
 {
-  "name": "azure-api-phi-3-mini-4k-instruct",
-  "displayName": "Phi-3-mini-4k-instruct",
+  "name": "azure-api-cohere-command-r-plus",
+  "displayName": "Cohere-command-r-plus",
   "version": "0.0.10",
   "scope": "public",
-  "description": "Phi-3-mini-4k-instruct from Azure API",
+  "description": "Cohere-command-r Plus from Azure API",
   "attributes": {
-    "Provider": "Microsoft",
+    "Provider": "Cohere",
     "Deployed By": "Microsoft",
     "Media Type": [
       "Text"
@@ -22,7 +22,7 @@
   "components": {
     "computeConfigs": [
       {
-        "name": "phi-3-mini-4k-instruct-azure-deploy",
+        "name": "cohere-command-r-plus-azure-deploy",
         "runtime": {
           "podType": "regular-xs",
           "concurrency": 10,
@@ -37,11 +37,11 @@
     ],
     "modules": [
       {
-        "name": "phi-3-mini-4k-instruct-azure-module",
+        "name": "cohere-command-r-plus-azure-module",
         "entryPoint": "models/base_model_adapter.py",
         "className": "ModelAdapter",
-        "computeConfig": "phi-3-mini-4k-instruct-azure-deploy",
-        "description": "Phi-3-mini-4k-instruct Azure API Adapter",
+        "computeConfig": "cohere-command-r-plus-azure-deploy",
+        "description": "Cohere-command-r-plus Azure API Adapter",
         "integrations": [
           "dl-azure-api-key"
         ],
@@ -75,7 +75,7 @@
             ],
             "displayName": "Predict Items",
             "displayIcon": "",
-            "description": "Azure API Phi-3-mini-4k-instruct predict items"
+            "description": "Azure API Cohere-command-r-plus predict items"
           },
           {
             "name": "predict_dataset",
@@ -95,15 +95,15 @@
             ],
             "displayName": "Predict Dataset",
             "displayIcon": "",
-            "description": "Function to run Azure API Phi-3-mini-4k-instruct inference on a dataset"
+            "description": "Function to run Azure API Cohere-command-r-plus inference on a dataset"
           }
         ]
       }
     ],
     "models": [
       {
-        "name": "phi-3-mini-4k-instruct-azure",
-        "moduleName": "phi-3-mini-4k-instruct-azure-module",
+        "name": "cohere-command-r-plus-azure",
+        "moduleName": "cohere-command-r-plus-azure-module",
         "scope": "project",
         "status": "pre-trained",
         "configuration": {
@@ -117,7 +117,7 @@
           "temperature": 0.5,
           "top_p": 1
         },
-        "description": "The Phi-3-mini-4k-instruct model on Azure API delivers compact yet effective natural language processing capabilities, ideal for lightweight and efficient text-based tasks"
+        "description": "The Cohere-command-r plus model on Azure API provides robust and versatile natural language processing for various text-based tasks, optimized for conversational interaction and long-context tasks"
       }
     ]
   }

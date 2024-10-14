@@ -43,7 +43,7 @@
         "computeConfig": "jais-30b-chat-azure-deploy",
         "description": "Jais-30b-chat Azure API Adapter",
         "integrations": [
-          "AZURE_MODEL_API_KEY"
+          "dl-azure-api-key"
         ],
         "initInputs": [
           {

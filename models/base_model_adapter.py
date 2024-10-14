@@ -11,7 +11,7 @@ class ModelAdapter(dl.BaseModelAdapter):
 
     def load(self, local_path, **kwargs):
         self.adapter_defaults.upload_annotations = False
-        self.api_key = os.environ.get("AZURE_MODEL_API_KEY")
+        self.api_key = os.environ.get("AZURE_API_KEY")
         if self.api_key is None:
             raise ValueError(f"Missing API key")
 
@@ -126,8 +126,11 @@ if __name__ == '__main__':
 
     load_dotenv()
 
-    dl.setenv('prod')
-    model = dl.models.get(model_id='')
-    item = dl.items.get(item_id='')
+    dl.setenv('rc')
+    model = dl.models.get(model_id='670501fc265e341610ae0518')
+    model.configuration[
+        "endpoint-url"] = "https://Cohere-command-r-plus-rxzus.swedencentral.models.ai.azure.com/chat/completions"
+    model.update()
+    item = dl.items.get(item_id='670ba346597b3128a2664998')
     adapter = ModelAdapter(model)
     adapter.predict_items(items=[item])
