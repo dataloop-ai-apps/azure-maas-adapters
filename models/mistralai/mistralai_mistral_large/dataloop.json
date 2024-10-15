@@ -43,7 +43,7 @@
         "computeConfig": "mistral-large-azure-deploy",
         "description": "Mistral-Large Azure API Adapter",
         "integrations": [
-          "AZURE_MODEL_API_KEY"
+          "dl-azure-api-key"
         ],
         "initInputs": [
           {

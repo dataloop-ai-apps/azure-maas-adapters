@@ -11,7 +11,7 @@ class ModelAdapter(dl.BaseModelAdapter):
 
     def load(self, local_path, **kwargs):
         self.adapter_defaults.upload_annotations = False
-        self.api_key = os.environ.get("AZURE_MODEL_API_KEY")
+        self.api_key = os.environ.get("AZURE_API_KEY")
         if self.api_key is None:
             raise ValueError(f"Missing API key")
 
@@ -119,15 +119,3 @@ class ModelAdapter(dl.BaseModelAdapter):
             reformat_messages.append(reformat_message)
 
         return reformat_messages
-
-
-if __name__ == '__main__':
-    from dotenv import load_dotenv
-
-    load_dotenv()
-
-    dl.setenv('prod')
-    model = dl.models.get(model_id='')
-    item = dl.items.get(item_id='')
-    adapter = ModelAdapter(model)
-    adapter.predict_items(items=[item])
