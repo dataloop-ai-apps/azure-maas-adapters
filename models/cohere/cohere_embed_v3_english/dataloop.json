@@ -37,7 +37,7 @@
     "modules": [
       {
         "name": "cohere-embed-v3-english-azure-module",
-        "entryPoint": "modules/base_embedder.py",
+        "entryPoint": "models/base_embedder.py",
         "className": "ModelAdapter",
         "computeConfig": "cohere-embed-v3-english-azure-deploy",
         "description": "Cohere-embed-v3-english Azure API Adapter",
