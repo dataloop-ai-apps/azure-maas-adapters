@@ -25,7 +25,7 @@
         "runtime": {
           "podType": "regular-xs",
           "concurrency": 10,
-          "runnerImage": "gcr.io/viewo-g/piper/agent/runner/cpu/openai:1.0.0",
+          "runnerImage": "dataloopai/dtlpy-agent:cpu.py3.10.opencv",
           "autoscaler": {
             "type": "rabbitmq",
             "minReplicas": 0,
