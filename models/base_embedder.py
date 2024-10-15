@@ -63,20 +63,3 @@ class ModelAdapter(dl.BaseModelAdapter):
             embeddings.append(embedding)
 
         return embeddings
-
-
-if __name__ == '__main__':
-    from dotenv import load_dotenv
-
-    load_dotenv()
-
-    dl.setenv('rc')
-    model = dl.models.get(model_id='670501fa265e3487d8ae0516')
-    model.configuration[
-        "endpoint-url"] = "https://Cohere-embed-v3-multilingual-ovr.swedencentral.models.ai.azure.com/embeddings"
-    model.configuration["featureSetName"] = "testing3"
-    model.configuration["embeddings_size"] = 1024
-    model.update()
-    item = dl.items.get(item_id='670ba346597b3128a2664998')
-    adapter = ModelAdapter(model)
-    adapter.embed_items(items=[item])
