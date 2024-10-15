@@ -119,18 +119,3 @@ class ModelAdapter(dl.BaseModelAdapter):
             reformat_messages.append(reformat_message)
 
         return reformat_messages
-
-
-if __name__ == '__main__':
-    from dotenv import load_dotenv
-
-    load_dotenv()
-
-    dl.setenv('rc')
-    model = dl.models.get(model_id='670501fc265e341610ae0518')
-    model.configuration[
-        "endpoint-url"] = "https://Cohere-command-r-plus-rxzus.swedencentral.models.ai.azure.com/chat/completions"
-    model.update()
-    item = dl.items.get(item_id='670ba346597b3128a2664998')
-    adapter = ModelAdapter(model)
-    adapter.predict_items(items=[item])
