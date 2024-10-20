@@ -104,6 +104,7 @@
         "moduleName": "cohere-embed-v3-multilingual-azure-module",
         "scope": "project",
         "status": "pre-trained",
+        "inputType": "text",
         "configuration": {
           "endpoint-url": "",
           "embeddings_size": 1024
