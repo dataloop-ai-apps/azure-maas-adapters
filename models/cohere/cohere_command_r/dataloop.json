@@ -43,7 +43,7 @@
         "computeConfig": "cohere-command-r-azure-deploy",
         "description": "Cohere-command-r Azure API Adapter",
         "integrations": [
-          "AZURE_MODEL_API_KEY"
+          "dl-azure-api-key"
         ],
         "initInputs": [
           {

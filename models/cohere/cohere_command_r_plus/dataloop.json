@@ -1,11 +1,11 @@
 {
-  "name": "azure-api-jais-30b-chat",
-  "displayName": "Jais-30b-chat",
+  "name": "azure-api-cohere-command-r-plus",
+  "displayName": "Cohere-command-r-plus",
   "version": "0.0.12",
   "scope": "public",
-  "description": "Jais-30b-chat from Azure API",
+  "description": "Cohere-command-r Plus from Azure API",
   "attributes": {
-    "Provider": "Core42",
+    "Provider": "Cohere",
     "Deployed By": "Microsoft",
     "Media Type": [
       "Text"
@@ -22,7 +22,7 @@
   "components": {
     "computeConfigs": [
       {
-        "name": "jais-30b-chat-azure-deploy",
+        "name": "cohere-command-r-plus-azure-deploy",
         "runtime": {
           "podType": "regular-xs",
           "concurrency": 10,
@@ -37,11 +37,11 @@
     ],
     "modules": [
       {
-        "name": "jais-30b-chat-azure-module",
+        "name": "cohere-command-r-plus-azure-module",
         "entryPoint": "models/base_model_adapter.py",
         "className": "ModelAdapter",
-        "computeConfig": "jais-30b-chat-azure-deploy",
-        "description": "Jais-30b-chat Azure API Adapter",
+        "computeConfig": "cohere-command-r-plus-azure-deploy",
+        "description": "Cohere-command-r-plus Azure API Adapter",
         "integrations": [
           "dl-azure-api-key"
         ],
@@ -75,7 +75,7 @@
             ],
             "displayName": "Predict Items",
             "displayIcon": "",
-            "description": "Azure API Jais-30b-chat predict items"
+            "description": "Azure API Cohere-command-r-plus predict items"
           },
           {
             "name": "predict_dataset",
@@ -95,15 +95,15 @@
             ],
             "displayName": "Predict Dataset",
             "displayIcon": "",
-            "description": "Function to run Azure API Jais-30b-chat inference on a dataset"
+            "description": "Function to run Azure API Cohere-command-r-plus inference on a dataset"
           }
         ]
       }
     ],
     "models": [
       {
-        "name": "jais-30b-chat-azure",
-        "moduleName": "jais-30b-chat-azure-module",
+        "name": "cohere-command-r-plus-azure",
+        "moduleName": "cohere-command-r-plus-azure-module",
         "scope": "project",
         "status": "pre-trained",
         "configuration": {
@@ -117,7 +117,7 @@
           "temperature": 0.5,
           "top_p": 1
         },
-        "description": "The Jais-30b-chat model on Azure API provides robust and versatile natural language processing for various text-based tasks, designed for medium-scale applications."
+        "description": "The Cohere-command-r plus model on Azure API provides robust and versatile natural language processing for various text-based tasks, optimized for conversational interaction and long-context tasks"
       }
     ]
   }

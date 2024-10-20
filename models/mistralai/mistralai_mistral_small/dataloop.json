@@ -43,7 +43,7 @@
         "computeConfig": "mistral-small-azure-deploy",
         "description": "Mistral-Small Azure API Adapter",
         "integrations": [
-          "AZURE_MODEL_API_KEY"
+          "dl-azure-api-key"
         ],
         "initInputs": [
           {
