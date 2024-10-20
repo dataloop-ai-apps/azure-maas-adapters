@@ -1,7 +1,7 @@
 {
   "name": "azure-api-ai21-jamba-instruct",
   "displayName": "AI21-Jamba-Instruct",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "scope": "public",
   "description": "AI21-Jamba-Instruct from Azure API",
   "attributes": {
@@ -17,7 +17,7 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/azure-maas-adapters.git",
-    "gitTag": "0.0.10"
+    "gitTag": "0.0.12"
   },
   "components": {
     "computeConfigs": [
