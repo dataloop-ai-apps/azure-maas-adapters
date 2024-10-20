@@ -1,7 +1,7 @@
 {
   "name": "azure-api-phi-3-medium-128k-instruct",
   "displayName": "Phi-3-medium-128k-instruct",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "scope": "public",
   "description": "Phi-3-medium-128k-instruct from Azure API",
   "attributes": {
@@ -17,7 +17,7 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/azure-maas-adapters.git",
-    "gitTag": "0.0.12"
+    "gitTag": "0.0.13"
   },
   "components": {
     "computeConfigs": [

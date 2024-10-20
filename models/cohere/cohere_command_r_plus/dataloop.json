@@ -1,7 +1,7 @@
 {
   "name": "azure-api-cohere-command-r-plus",
   "displayName": "Cohere-command-r-plus",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "scope": "public",
   "description": "Cohere-command-r Plus from Azure API",
   "attributes": {
@@ -17,7 +17,7 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/azure-maas-adapters.git",
-    "gitTag": "0.0.12"
+    "gitTag": "0.0.13"
   },
   "components": {
     "computeConfigs": [
