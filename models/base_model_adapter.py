@@ -19,7 +19,6 @@ class ModelAdapter(dl.BaseModelAdapter):
         if not self.url:
             raise ValueError("You must provide the endpoint URL for the deployed model. "
                              "Add the URL to the model's configuration under 'endpoint-url'.")
-        self.stream = self.configuration.get("stream", True)
 
     def prepare_item_func(self, item: dl.Item):
         prompt_item = dl.PromptItem.from_item(item)
@@ -40,13 +39,16 @@ class ModelAdapter(dl.BaseModelAdapter):
         return ""
 
     def post_stream(self, messages):
-
+        stream = self.configuration.get("stream", True)
+        max_tokens = self.configuration.get('max_tokens', 1024)
+        temperature = self.configuration.get('temperature', 0.5)
+        top_p = self.model_entity.configuration.get('top_p', 0.7)
         data = {
             "messages": messages,
-            "max_tokens": self.configuration.get('max_tokens', 1024),
-            "temperature": self.configuration.get('temperature', 0.5),
-            "top_p": self.model_entity.configuration.get('top_p', 0.7),
-            "stream": self.stream
+            "max_tokens": max_tokens,
+            "temperature": temperature,
+            "top_p": top_p,
+            "stream": stream
         }
         headers = {
             "Content-Type": "application/json",
@@ -54,11 +56,11 @@ class ModelAdapter(dl.BaseModelAdapter):
         }
 
         s = requests.Session()
-        response = s.post(self.url, data=json.dumps(data), headers=headers, stream=self.stream)
+        response = s.post(self.url, data=json.dumps(data), headers=headers, stream=stream)
         if not response.ok:
             raise ValueError(f'error:{response.status_code}, message: {response.text}')
 
-        if self.stream:
+        if stream:
             with response:  # To properly closed The response object after the block of code is executed
                 logger.info("Streaming the response")
                 for line in response.iter_lines():
@@ -70,9 +72,12 @@ class ModelAdapter(dl.BaseModelAdapter):
 
     def predict(self, batch, **kwargs):
         system_prompt = self.model_entity.configuration.get('system_prompt', "")
+        add_metadata = self.configuration.get("add_metadata")
+        model_name = self.model_entity.name
+
         for prompt_item in batch:
             _messages = prompt_item.to_messages(
-                model_name=self.model_entity.name)  # Get all messages including model annotations
+                model_name=model_name)  # Get all messages including model annotations
 
             messages = self.reformat_messages(_messages)
             messages.insert(0, {"role": "system",
@@ -81,7 +86,7 @@ class ModelAdapter(dl.BaseModelAdapter):
             nearest_items = prompt_item.prompts[-1].metadata.get('nearestItems', [])
             if len(nearest_items) > 0:
                 context = prompt_item.build_context(nearest_items=nearest_items,
-                                                    add_metadata=self.configuration.get("add_metadata"))
+                                                    add_metadata=add_metadata)
                 messages.append({"role": "assistant", "content": context})
 
             stream_response = self.post_stream(messages=messages)
@@ -92,8 +97,8 @@ class ModelAdapter(dl.BaseModelAdapter):
                 prompt_item.add(message={"role": "assistant",
                                          "content": [{"mimetype": dl.PromptType.TEXT,
                                                       "value": response}]},
-                                stream=self.stream,
-                                model_info={'name': self.model_entity.name,
+                                stream=True,
+                                model_info={'name': model_name,
                                             'confidence': 1.0,
                                             'model_id': self.model_entity.id})
 
