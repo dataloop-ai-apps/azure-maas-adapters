@@ -60,7 +60,7 @@ class ModelAdapter(dl.BaseModelAdapter):
         if not response.ok:
             raise ValueError(f'error:{response.status_code}, message: {response.text}')
 
-        if stream:
+        if stream is True:
             with response:  # To properly closed The response object after the block of code is executed
                 logger.info("Streaming the response")
                 for line in response.iter_lines():
@@ -97,7 +97,6 @@ class ModelAdapter(dl.BaseModelAdapter):
                 prompt_item.add(message={"role": "assistant",
                                          "content": [{"mimetype": dl.PromptType.TEXT,
                                                       "value": response}]},
-                                stream=True,
                                 model_info={'name': model_name,
                                             'confidence': 1.0,
                                             'model_id': self.model_entity.id})
