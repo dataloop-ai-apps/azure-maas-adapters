@@ -1,7 +1,7 @@
 {
   "name": "azure-api-cohere-embed-v3-multilingual",
   "displayName": "Cohere-embed-v3-multilingual",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "scope": "public",
   "description": "Cohere-embed-v3-multilingual from Azure API",
   "attributes": {
@@ -16,7 +16,7 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/azure-maas-adapters.git",
-    "gitTag": "0.0.13"
+    "gitTag": "0.0.14"
   },
   "components": {
     "computeConfigs": [
