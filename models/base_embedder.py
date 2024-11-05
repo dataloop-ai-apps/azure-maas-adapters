@@ -20,6 +20,23 @@ class ModelAdapter(dl.BaseModelAdapter):
             raise ValueError("You must provide the endpoint URL for the deployed model. "
                              "Add the URL to the model's configuration under 'endpoint-url'.")
 
+    def call_model(self, text):
+        data = {
+            "input": [text],
+            "input_type": "query"
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.api_key}"
+        }
+
+        s = requests.Session()
+        response = s.post(self.url, data=json.dumps(data), headers=headers)
+        if not response.ok:
+            raise ValueError(f'error:{response.status_code}, message: {response.text}')
+
+        return response.json().get("data")[0].get("embedding")
+
     def embed(self, batch, **kwargs):
         embeddings = []
         for item in batch:
@@ -44,21 +61,7 @@ class ModelAdapter(dl.BaseModelAdapter):
                 except ValueError as e:
                     raise ValueError(f'Only mimetype text or prompt items are supported {e}')
 
-            data = {
-                "input": [text],
-                "input_type": "query"
-            }
-            headers = {
-                "Content-Type": "application/json",
-                "Authorization": f"Bearer {self.api_key}"
-            }
-
-            s = requests.Session()
-            response = s.post(self.url, data=json.dumps(data), headers=headers)
-            if not response.ok:
-                raise ValueError(f'error:{response.status_code}, message: {response.text}')
-
-            embedding = response.json().get("data")[0].get("embedding")
+            embedding = self.call_model(text=text)
             logger.info(f'Extracted embeddings for text {item}: {embedding}')
             embeddings.append(embedding)
 
