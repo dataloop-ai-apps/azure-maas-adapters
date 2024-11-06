@@ -1,13 +1,15 @@
 {
   "name": "azure-api-jais-30b-chat",
   "displayName": "Jais-30b-chat",
-  "version": "0.0.10",
+  "version": "0.0.14",
   "scope": "public",
   "description": "Jais-30b-chat from Azure API",
   "attributes": {
     "Provider": "Core42",
     "Deployed By": "Microsoft",
-    "Media Type": ["Text"],
+    "Media Type": [
+      "Text"
+    ],
     "Category": "Model",
     "Gen AI": "LLM",
     "NLP": "Conversational"
@@ -15,7 +17,7 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/azure-maas-adapters.git",
-    "gitTag": "0.0.10"
+    "gitTag": "0.0.14"
   },
   "components": {
     "computeConfigs": [
@@ -40,14 +42,13 @@
         "className": "ModelAdapter",
         "computeConfig": "jais-30b-chat-azure-deploy",
         "description": "Jais-30b-chat Azure API Adapter",
+        "integrations": [
+          "dl-azure-api-key"
+        ],
         "initInputs": [
           {
             "type": "Model",
             "name": "model_entity"
-          },
-          {
-            "type": "String",
-            "name": "azure_api_key_name"
           }
         ],
         "functions": [
@@ -107,11 +108,14 @@
         "status": "pre-trained",
         "configuration": {
           "system_prompt": "You are a helpful and a bit cynical assistant. Give relevant and short answers, if you dont know the answer just say it, dont make up an answer",
+          "endpoint-url": "",
+          "add_metadata": [
+            "system.document.source"
+          ],
+          "stream": true,
           "max_tokens": 1024,
           "temperature": 0.5,
-          "top_p": 1,
-          "stream": true,
-          "endpoint-url": ""
+          "top_p": 1
         },
         "description": "The Jais-30b-chat model on Azure API provides robust and versatile natural language processing for various text-based tasks, designed for medium-scale applications."
       }

@@ -1,9 +1,9 @@
 {
-  "name": "azure-api-mistralai-mistral-small",
-  "displayName": "Mistral-Small",
+  "name": "azure-api-mistralai-mistral-large",
+  "displayName": "Mistral-Large",
   "version": "0.0.14",
   "scope": "public",
-  "description": "Mistral-Small from Azure API - Requires API Key and Endpoint URL",
+  "description": "Mistral-Large from Azure API - Requires API Key and Endpoint URL",
   "attributes": {
     "Provider": "MistralAI",
     "Deployed By": "Microsoft",
@@ -22,7 +22,7 @@
   "components": {
     "computeConfigs": [
       {
-        "name": "mistral-small-azure-deploy",
+        "name": "mistral-large-azure-deploy",
         "runtime": {
           "podType": "regular-xs",
           "concurrency": 10,
@@ -37,11 +37,11 @@
     ],
     "modules": [
       {
-        "name": "mistral-small-azure-module",
+        "name": "mistral-large-azure-module",
         "entryPoint": "models/base_model_adapter.py",
         "className": "ModelAdapter",
-        "computeConfig": "mistral-small-azure-deploy",
-        "description": "Mistral-Small Azure API Adapter",
+        "computeConfig": "mistral-large-azure-deploy",
+        "description": "Mistral-Large Azure API Adapter",
         "integrations": [
           "dl-azure-api-key"
         ],
@@ -75,7 +75,7 @@
             ],
             "displayName": "Predict Items",
             "displayIcon": "",
-            "description": "Azure API Mistral-Small predict items"
+            "description": "Azure API Mistral-Large predict items"
           },
           {
             "name": "predict_dataset",
@@ -95,15 +95,15 @@
             ],
             "displayName": "Predict Dataset",
             "displayIcon": "",
-            "description": "Function to run Azure API Mistral-Small inference on a dataset"
+            "description": "Function to run Azure API Mistral-Large inference on a dataset"
           }
         ]
       }
     ],
     "models": [
       {
-        "name": "mistral-small-azure",
-        "moduleName": "mistral-small-azure-module",
+        "name": "mistral-large-azure",
+        "moduleName": "mistral-large-azure-module",
         "scope": "project",
         "status": "pre-trained",
         "configuration": {
@@ -117,7 +117,7 @@
           "temperature": 0.5,
           "top_p": 1
         },
-        "description": "The Mistral Small model on Azure API offers efficient natural language processing capabilities for tasks like text generation and summarization."
+        "description": "The Mistral Large model on Azure API provides powerful natural language processing capabilities, including text generation and summarization, with high efficiency."
       }
     ]
   }

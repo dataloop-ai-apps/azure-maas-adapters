@@ -339,3 +339,6 @@ time_gen.py
 requests-client.py
 filters-apps.py
 *.csv
+.github/
+test_phi.py
+*.whl

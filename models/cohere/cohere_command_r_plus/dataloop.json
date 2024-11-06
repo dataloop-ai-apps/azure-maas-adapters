@@ -1,11 +1,11 @@
 {
-  "name": "azure-api-mistralai-mistral-small",
-  "displayName": "Mistral-Small",
+  "name": "azure-api-cohere-command-r-plus",
+  "displayName": "Cohere-command-r-plus",
   "version": "0.0.14",
   "scope": "public",
-  "description": "Mistral-Small from Azure API - Requires API Key and Endpoint URL",
+  "description": "Cohere-command-r Plus from Azure API",
   "attributes": {
-    "Provider": "MistralAI",
+    "Provider": "Cohere",
     "Deployed By": "Microsoft",
     "Media Type": [
       "Text"
@@ -22,7 +22,7 @@
   "components": {
     "computeConfigs": [
       {
-        "name": "mistral-small-azure-deploy",
+        "name": "cohere-command-r-plus-azure-deploy",
         "runtime": {
           "podType": "regular-xs",
           "concurrency": 10,
@@ -37,11 +37,11 @@
     ],
     "modules": [
       {
-        "name": "mistral-small-azure-module",
+        "name": "cohere-command-r-plus-azure-module",
         "entryPoint": "models/base_model_adapter.py",
         "className": "ModelAdapter",
-        "computeConfig": "mistral-small-azure-deploy",
-        "description": "Mistral-Small Azure API Adapter",
+        "computeConfig": "cohere-command-r-plus-azure-deploy",
+        "description": "Cohere-command-r-plus Azure API Adapter",
         "integrations": [
           "dl-azure-api-key"
         ],
@@ -75,7 +75,7 @@
             ],
             "displayName": "Predict Items",
             "displayIcon": "",
-            "description": "Azure API Mistral-Small predict items"
+            "description": "Azure API Cohere-command-r-plus predict items"
           },
           {
             "name": "predict_dataset",
@@ -95,15 +95,15 @@
             ],
             "displayName": "Predict Dataset",
             "displayIcon": "",
-            "description": "Function to run Azure API Mistral-Small inference on a dataset"
+            "description": "Function to run Azure API Cohere-command-r-plus inference on a dataset"
           }
         ]
       }
     ],
     "models": [
       {
-        "name": "mistral-small-azure",
-        "moduleName": "mistral-small-azure-module",
+        "name": "cohere-command-r-plus-azure",
+        "moduleName": "cohere-command-r-plus-azure-module",
         "scope": "project",
         "status": "pre-trained",
         "configuration": {
@@ -117,7 +117,7 @@
           "temperature": 0.5,
           "top_p": 1
         },
-        "description": "The Mistral Small model on Azure API offers efficient natural language processing capabilities for tasks like text generation and summarization."
+        "description": "The Cohere-command-r plus model on Azure API provides robust and versatile natural language processing for various text-based tasks, optimized for conversational interaction and long-context tasks"
       }
     ]
   }
