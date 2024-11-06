@@ -16,9 +16,9 @@ class ModelAdapter(dl.BaseModelAdapter):
             raise ValueError(f"Missing API key")
 
         self.url = self.configuration.get("endpoint-url", "")
-        if not self.url:
+        if isinstance(self.url, str) and not self.url.strip():
             raise ValueError("You must provide the endpoint URL for the deployed model. "
-                             "Add the URL to the model's configuration under 'endpoint-url'.")
+                             "Add the a valid string URL to the model's configuration under 'endpoint-url'.")
 
     def call_model(self, text):
         data = {
