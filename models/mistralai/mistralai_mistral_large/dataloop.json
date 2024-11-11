@@ -12,7 +12,11 @@
     ],
     "Category": "Model",
     "Gen AI": "LLM",
-    "NLP": "Conversational"
+    "NLP": "Conversational",
+    "Hub": [
+      "Dataloop",
+      "Microsoft"
+    ]
   },
   "codebase": {
     "type": "git",
@@ -91,8 +95,7 @@
                 "description": "Dataloop Filter DQL"
               }
             ],
-            "output": [
-            ],
+            "output": [],
             "displayName": "Predict Dataset",
             "displayIcon": "",
             "description": "Function to run Azure API Mistral-Large inference on a dataset"
