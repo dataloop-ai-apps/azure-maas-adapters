@@ -12,7 +12,11 @@
     ],
     "Category": "Model",
     "Gen AI": "LLM",
-    "NLP": "Conversational"
+    "NLP": "Conversational",
+    "Hub": [
+      "Dataloop",
+      "Microsoft"
+    ]
   },
   "codebase": {
     "type": "git",

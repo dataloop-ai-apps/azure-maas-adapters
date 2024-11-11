@@ -11,6 +11,10 @@
     "NLP": "Embeddings",
     "Media Type": [
       "Text"
+    ],
+    "Hub": [
+      "Dataloop",
+      "Microsoft"
     ]
   },
   "codebase": {
