@@ -1,0 +1,162 @@
+{
+    "name": "azure-api-cohere-embed-v3-multilingual",
+    "displayName": "Cohere-embed-v3-multilingual",
+    "version": "0.0.2",
+    "scope": "public",
+    "description": "Cohere-embed-v3-multilingual from Azure API",
+    "attributes": {
+        "Provider": "Cohere",
+        "Deployed By": "Microsoft",
+        "Category": "Model",
+        "NLP": "Embeddings",
+        "Media Type": [
+            "Text"
+        ]
+    },
+    "codebase": {
+        "type": "git",
+        "gitUrl": "https://github.com/dataloop-ai-apps/azure-maas-adapters.git",
+        "gitTag": "0.0.2"
+    },
+    "components": {
+        "computeConfigs": [
+            {
+                "name": "multilingual-azure-deploy",
+                "runtime": {
+                    "podType": "regular-xs",
+                    "concurrency": 10,
+                    "runnerImage": "gcr.io/viewo-g/piper/agent/runner/cpu/openai:1.0.0",
+                    "autoscaler": {
+                        "type": "rabbitmq",
+                        "minReplicas": 0,
+                        "maxReplicas": 2
+                    }
+                }
+            }
+        ],
+        "modules": [
+            {
+                "name": "multilingual-azure-module",
+                "entryPoint": "embedders/base_embed_adapter.py",
+                "className": "ModelAdapter",
+                "computeConfig": "multilingual-azure-deploy",
+                "description": "Cohere-embed-v3-multilingual Azure API Adapter",
+                "initInputs": [
+                    {
+                        "type": "Model",
+                        "name": "model_entity"
+                    }
+                ],
+                "functions": [
+                    {
+                        "name": "predict_items",
+                        "input": [
+                            {
+                                "type": "Item[]",
+                                "name": "items",
+                                "description": "List of items to run inference on"
+                            }
+                        ],
+                        "output": [
+                            {
+                                "type": "Item[]",
+                                "name": "items",
+                                "description": "The same input images for prediction."
+                            },
+                            {
+                                "type": "Annotation[]",
+                                "name": "annotations",
+                                "description": "The predicted annotations."
+                            }
+                        ],
+                        "displayName": "Predict Items",
+                        "displayIcon": "",
+                        "description": "Azure API Cohere-embed-v3-multilingual predict items"
+                    },
+                    {
+                        "name": "predict_dataset",
+                        "input": [
+                            {
+                                "type": "Dataset",
+                                "name": "dataset",
+                                "description": ""
+                            },
+                            {
+                                "type": "Json",
+                                "name": "filters",
+                                "description": "Dataloop Filter DQL"
+                            }
+                        ],
+                        "output": [
+                        ],
+                        "displayName": "Predict Dataset",
+                        "displayIcon": "",
+                        "description": "Function to run Azure API Cohere-embed-v3-multilingual inference on a dataset"
+                    },
+                    {
+                        "name": "evaluate_model",
+                        "computeConfig": "deeplab-train-evaluate",
+                        "input": [
+                            {
+                                "type": "Model",
+                                "name": "model",
+                                "description": "Dataloop Model Entity"
+                            },
+                            {
+                                "type": "Dataset",
+                                "name": "dataset",
+                                "description": "Dataloop Dataset Entity"
+                            },
+                            {
+                                "type": "Json",
+                                "name": "filters",
+                                "description": "Dataloop Filter DQL"
+                            }
+                        ],
+                        "output": [
+                            {
+                                "type": "Model",
+                                "name": "model",
+                                "description": "Dataloop Model Entity"
+                            },
+                            {
+                                "type": "Dataset",
+                                "name": "dataset",
+                                "description": "Dataloop Dataset Entity"
+                            }
+                        ],
+                        "displayName": "Evaluate a Model",
+                        "displayIcon": "",
+                        "description": "Function to evaluate Azure API Cohere-embed-v3-multilingual model performance"
+                    }
+                ],
+                "integrations": [
+                    "dl-azure-maas-api-key"
+                ]
+            }
+        ],
+        "models": [
+            {
+                "name": "cohere-embed-v3-multilingual-azure",
+                "moduleName": "multilingual-azure-module",
+                "scope": "project",
+                "status": "pre-trained",
+                "configuration": {
+                    "max_tokens": 1024,
+                    "endpoint-url": ""
+                },
+                "description": "The Cohere-embed-v3-multilingual model on Azure API provides robust and versatile natural language processing for various text-based tasks, designed for medium-scale applications."
+            }
+        ],
+        "integrations": [
+            {
+                "key": "dl-azure-maas-api-key",
+                "type": "key/value",
+                "env": "AZURE_API_KEY",
+                "description": "API key for the Azure MaaS deployed model",
+                "displayName": "Azure API Key",
+                "to": "Microsoft"
+            }
+        ]
+    }
+}
