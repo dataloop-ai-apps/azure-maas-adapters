@@ -37,7 +37,7 @@ class ModelAdapter(dl.BaseModelAdapter):
 
         return response.json().get("data")[0].get("embedding")
 
-    def get_text    def get_text(self, item):
+    def get_text(self, item):
         hyde_model_name = self.configuration.get('hyde_model_name')
         text = None
         if isinstance(item, str):
@@ -59,15 +59,17 @@ class ModelAdapter(dl.BaseModelAdapter):
             except ValueError as e:
                 raise ValueError(f'Only mimetype text or prompt items are supported {e}')
         return text
-        
+
 
     def embed(self, batch, **kwargs):
         embeddings = []
         for item in batch:
-            text = get_item()
-            if isinstance(item, str):
-                self.adapter_defaults.upload_features = True
-                text = item
+            text = self.get_text(item)
+            if self.configuration.get('external_vector_db', False) is False:
+                if isinstance(item, str):
+                    self.adapter_defaults.upload_features = True
+                else:
+                    self.adapter_defaults.upload_features = False
             else:
                 self.adapter_defaults.upload_features = False
     
