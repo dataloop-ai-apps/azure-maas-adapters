@@ -1,6 +1,6 @@
 # Azure Model-as-a-Service Model Adapters
 
-This repository contains the code for Dataloop model adapters that invoke models served in Azure via their API ANS
+This repository contains the code for DDOE model adapters that invoke models served in Azure via their API ANS
 Endpoint.
 To use this model adapter, it is needed to have a workspace in Azure and a model serving endpoint in the workspace.
 
@@ -55,11 +55,11 @@ By following these steps, you should be able to deploy your model using Azure ML
 capabilities.
 If you encounter any issues, refer to the Azure ML documentation.
 
-## Dataloop Platform
+## DDOE Platform
 
-Once you have an API key and a Url you can access and get a response from your model in Dataloop platform.
+Once you have an API key and a Url you can access and get a response from your model in DDOE platform.
 
-### 1. Install the model from Dataloop Marketplace
+### 1. Install the model from DDOE Marketplace
 
 Go to Marketplace, Models tab, and search for the requested model (Azure and Model's name) and install:
 
@@ -108,4 +108,4 @@ your secret by choosing from the options list.
 
 
 
-After following these steps, you be able to use Azure Serverless API models via Dataloop Platform.
+After following these steps, you be able to use Azure Serverless API models via DDOE Platform.
