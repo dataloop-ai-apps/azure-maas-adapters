@@ -14,7 +14,7 @@
     "Gen AI": "LLM",
     "NLP": "Conversational",
     "Hub": [
-      "Dataloop",
+      "DDOE",
       "Microsoft"
     ]
   },
@@ -92,7 +92,7 @@
               {
                 "type": "Json",
                 "name": "filters",
-                "description": "Dataloop Filter DQL"
+                "description": "DDOE Filter DQL"
               }
             ],
             "output": [],
